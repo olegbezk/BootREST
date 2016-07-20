@@ -1,15 +1,13 @@
-package com.boot.restapi.web;
+package com.boot.rest.web;
 
-import com.boot.restapi.dao.DataObjectRepository;
-import com.boot.restapi.model.DataObject;
+import com.boot.rest.dao.DataObjectRepository;
+import com.boot.rest.model.DataObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Oleg on 20 Jul 2016.
@@ -36,13 +34,13 @@ public class ApplicationController {
 
     @Transactional
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DataObject addTransactionLog(@RequestBody DataObject data) {
+    public DataObject addData(@RequestBody DataObject data) {
         return dataObjectRepository.save(data);
     }
 
     @Transactional
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteTransactionsLog(@PathVariable("id") int id) {
+    public void deleteData(@PathVariable("id") int id) {
         dataObjectRepository.delete(id);
     }
 

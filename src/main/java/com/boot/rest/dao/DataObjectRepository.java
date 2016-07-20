@@ -1,6 +1,6 @@
-package com.boot.restapi.dao;
+package com.boot.rest.dao;
 
-import com.boot.restapi.model.DataObject;
+import com.boot.rest.model.DataObject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

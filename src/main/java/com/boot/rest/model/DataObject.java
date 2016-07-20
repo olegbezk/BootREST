@@ -1,4 +1,4 @@
-package com.boot.restapi.model;
+package com.boot.rest.model;
 
 import javax.persistence.*;
 
