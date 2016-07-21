@@ -44,5 +44,4 @@ public class ApplicationController {
         dataObjectRepository.delete(id);
     }
 
-
 }
