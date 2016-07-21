@@ -134,7 +134,6 @@ public class ApplicationControllerTest {
         List<DataObject> dataFromDBAfterDelOp = dataObjectRepository.findAll();
 
         assertEquals(0, dataFromDBAfterDelOp.size());
-
     }
 
 }

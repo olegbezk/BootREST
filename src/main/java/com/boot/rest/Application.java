@@ -30,7 +30,6 @@ public class Application {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2)
                 .addScript("schema/applicationDatabase.sql")
-                //.addScript("schema/insert.sql")
                 .build();
     }
 
