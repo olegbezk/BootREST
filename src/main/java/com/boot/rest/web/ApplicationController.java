@@ -7,7 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Oleg on 20 Jul 2016.
@@ -19,6 +23,11 @@ public class ApplicationController {
 
     @Autowired
     private DataObjectRepository dataObjectRepository;
+
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
+    }
 
     @Transactional
     @RequestMapping(value = "/all", method = RequestMethod.GET)
