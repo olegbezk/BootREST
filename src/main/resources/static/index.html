@@ -11,12 +11,45 @@
 </head>
 
 <body>
-<div ng-controller="navigation as nav" class="container">
-    <ul class="nav nav-pills" role="tablist">
-        <li ng-class="{active:nav.tab('home')}"><a href="#/">home</a></li>
-        <li ng-class="{active:nav.tab('navigation')}"><a href="#/login">login</a></li>
-        <li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
-    </ul>
+<p style="text-align:center;">
+    <font size="5">Data</font>
+</p>
+
+<div ng-controller="controller">
+
+        <form ng-submit="submitData()">
+            Title:<br>
+            <input type="text" ng-model="formData.title"><br>
+            Number:<br>
+            <input type="text" ng-model="formData.number">
+            <br><br>
+            <input type="submit" ngClick="Submit" />
+        </form>
+
+    <br><br>
+
+    <table border="1" style="width:100%">
+        <tr>
+            <td style="width: 50%"><p style="text-align:center;">
+                Number
+            </td>
+            <td style="width: 50%"><p style="text-align:center;">
+                Title
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul style="text-align:center;" ng-repeat="res in results">
+                    {{res.number}}
+                </ul>
+            </td>
+            <td>
+                <ul style="text-align:center;" ng-repeat="res in results">
+                    {{res.title}}
+                </ul>
+            </td>
+        </tr>
+    </table>
 </div>
 <div ng-view class="container"></div>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>

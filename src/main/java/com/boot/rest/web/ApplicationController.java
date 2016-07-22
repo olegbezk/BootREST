@@ -24,11 +24,6 @@ public class ApplicationController {
     @Autowired
     private DataObjectRepository dataObjectRepository;
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
-
     @Transactional
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<DataObject> getData() {

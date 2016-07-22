@@ -1,92 +1,48 @@
-//angular.module('app', [])
-//
-//.controller('controller', function($scope, $http) {
-//
-//    $http.get('http://localhost:8080/data/all/')
-//        .then(function(res){
-//            $scope.results = res.data;
-//        });
-//
-//});
+angular.module('app', [])
 
-angular.module('app', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
+.controller('controller', function($scope, $http) {
 
-	$routeProvider.when('/', {
-		templateUrl : 'home.html',
-		controller : 'home',
-		controllerAs: 'controller'
-	}).when('/login', {
-		templateUrl : 'login.html',
-		controller : 'navigation',
-		controllerAs: 'controller'
-	}).otherwise('/');
+    function showData() {
+        $http.get('http://localhost:8080/data/all/')
+            .then(function(res){
+                $scope.results = res.data;
+            });
+    }
 
-	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    var data = {
+        title: "",
+        number: 0
+    };
 
-}).controller('navigation',
+    $scope.submitData = function() {
 
-		function($rootScope, $http, $location, $route) {
+         data = $scope.formData
 
-			var self = this;
+         if(!isFinite(data.number)) {
+             alert("Insert a number in the number field, please!")
+         }
 
-			self.tab = function(route) {
-				return $route.current && route === $route.current.controller;
-			};
+         $http.post(
+                'http://localhost:8080/data/add/',
+                JSON.stringify(data),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ).success(function (response) {
+                $scope.postResult = response;
+            }).error(function (response) {
 
-			var authenticate = function(credentials, callback) {
+            });
 
-				var headers = credentials ? {
-					authorization : "Basic "
-							+ btoa(credentials.username + ":"
-									+ credentials.password)
-				} : {};
+            showData();
 
-				$http.get('user', {
-					headers : headers
-				}).then(function(response) {
-					if (response.data.name) {
-						$rootScope.authenticated = true;
-					} else {
-						$rootScope.authenticated = false;
-					}
-					callback && callback($rootScope.authenticated);
-				}, function() {
-					$rootScope.authenticated = false;
-					callback && callback(false);
-				});
+            data.title = "";
+            data.number = "";
+    }
 
-			}
-
-			authenticate();
-
-			self.credentials = {};
-			self.login = function() {
-				authenticate(self.credentials, function(authenticated) {
-					if (authenticated) {
-						console.log("Login succeeded")
-						$location.path("/");
-						self.error = false;
-						$rootScope.authenticated = true;
-					} else {
-						console.log("Login failed")
-						$location.path("/login");
-						self.error = true;
-						$rootScope.authenticated = false;
-					}
-				})
-			};
-
-			self.logout = function() {
-				$http.post('logout', {}).finally(function() {
-					$rootScope.authenticated = false;
-					$location.path("/");
-				});
-			}
-
-		}).controller('home', function($scope, $http) {
-
-              $http.get('http://localhost:8080/data/all/')
-                  .then(function(res){
-                      $scope.results = res.data;
-                  });
 });
+
+
+
