@@ -17,6 +17,7 @@
 
 <div ng-controller="controller">
 
+    <h2>Add</h2>
         <form ng-submit="submitData()">
             Number:<br>
             <input type="text" ng-model="formData.number"><br>
@@ -25,20 +26,38 @@
             <!--<input type="text" ng-model="formData.title">-->
             <br><br>
             <input type="submit" ngClick="Submit" />
+            <hr />
         </form>
 
-    <br><br>
+    <h2>Delete</h2>
+    <form ng-submit="DeleteData()">
+        Input id:<br>
+            <input type="text" name="id" ng-model="id" required />
+        <input type="submit" ngClick="Submit" />
+        <hr />
+    </form>
 
+    <br>
+
+    <h2>All Data</h2>
     <table border="1" style="width:100%">
         <tr>
-            <td style="width: 50%"><p style="text-align:center;">
+            <td style="width: 33%%"><p style="text-align:center;">
+                Id
+            </td>
+            <td style="width: 33%"><p style="text-align:center;">
                 Number
             </td>
-            <td style="width: 50%"><p style="text-align:center;">
+            <td style="width: 33%"><p style="text-align:center;">
                 Title
             </td>
         </tr>
         <tr>
+            <td>
+                <ul style="text-align:center;" ng-repeat="res in results">
+                    {{res.id}}
+                </ul>
+            </td>
             <td>
                 <ul style="text-align:center;" ng-repeat="res in results">
                     {{res.number}}

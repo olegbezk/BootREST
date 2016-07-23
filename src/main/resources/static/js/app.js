@@ -2,6 +2,11 @@ angular.module('app', [])
 
 .controller('controller', function($scope, $http) {
 
+    var data = {
+        title: "",
+        number: ""
+    };
+
     function showData() {
         $http.get('http://localhost:8080/data/all/')
             .then(function(res){
@@ -9,10 +14,17 @@ angular.module('app', [])
             });
     }
 
-    var data = {
-        title: "",
-        number: ""
-    };
+     $scope.DeleteData = function () {
+
+                $http.delete('http://localhost:8080/data/delete/' + $scope.id)
+                .success(function (data, status, headers) {
+                    $scope.ServerResponse = data;
+                });
+
+                showData();
+
+                $scope.id = "";
+            };
 
     $scope.submitData = function() {
 
