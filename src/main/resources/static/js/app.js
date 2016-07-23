@@ -11,12 +11,16 @@ angular.module('app', [])
 
     var data = {
         title: "",
-        number: 0
+        number: ""
     };
 
     $scope.submitData = function() {
 
          data = $scope.formData
+
+         if (data.number == 0) {
+             return;
+         }
 
          if(!isFinite(data.number)) {
              alert("Insert a number in the number field, please!")
