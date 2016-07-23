@@ -20,14 +20,52 @@
     <h2>Add</h2>
         <form ng-submit="submitData()">
             Number:<br>
-            <input type="text" ng-model="formData.number"><br>
+            <input type="text" ng-model="formData.number" required ><br>
             Title:<br>
-            <textarea name="title" ng-model="formData.title">Enter text here...</textarea>
+            <textarea name="title" ng-model="formData.title" required >Enter text here...</textarea>
             <!--<input type="text" ng-model="formData.title">-->
             <br><br>
             <input type="submit" ngClick="Submit" />
             <hr />
         </form>
+
+    <h2>Show data by id</h2>
+    <form ng-submit="showDataById()">
+        Input id:<br>
+        <input type="text" name="idUn" ng-model="idUn" required />
+        <input type="submit" ngClick="Submit" />
+    </form>
+    <table border="1" style="width:100%">
+        <tr>
+            <td style="width: 33%%"><p style="text-align:center;">
+                Id
+            </td>
+            <td style="width: 33%"><p style="text-align:center;">
+                Number
+            </td>
+            <td style="width: 33%"><p style="text-align:center;">
+                Title
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul style="text-align:center;">
+                    {{item.id}}
+                </ul>
+            </td>
+            <td>
+                <ul style="text-align:center;">
+                    {{item.number}}
+                </ul>
+            </td>
+            <td>
+                <ul style="text-align:center;">
+                    {{item.title}}
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <hr />
 
     <h2>Delete</h2>
     <form ng-submit="DeleteData()">
@@ -36,8 +74,6 @@
         <input type="submit" ngClick="Submit" />
         <hr />
     </form>
-
-    <br>
 
     <h2>All Data</h2>
     <table border="1" style="width:100%">

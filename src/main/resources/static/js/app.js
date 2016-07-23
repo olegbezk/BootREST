@@ -14,17 +14,28 @@ angular.module('app', [])
             });
     }
 
-     $scope.DeleteData = function () {
+    $scope.showDataById = function () {
 
-                $http.delete('http://localhost:8080/data/delete/' + $scope.id)
-                .success(function (data, status, headers) {
-                    $scope.ServerResponse = data;
-                });
+        showData();
 
-                showData();
+        $http.get('http://localhost:8080/data/' + $scope.idUn)
+            .then(function(res){
+                $scope.item = res.data;
+            });
+            $scope.idUn = "";
+    };
 
-                $scope.id = "";
-            };
+    $scope.DeleteData = function () {
+
+            $http.delete('http://localhost:8080/data/delete/' + $scope.id)
+            .success(function (data, status, headers) {
+                $scope.ServerResponse = data;
+            });
+
+            showData();
+
+            $scope.id = "";
+    };
 
     $scope.submitData = function() {
 
