@@ -14,7 +14,7 @@ angular.module('app', [])
             });
     }
 
-    $scope.showDataById = function () {
+    $scope.showDataById = function() {
 
         showData();
 
@@ -25,7 +25,7 @@ angular.module('app', [])
             $scope.idUn = "";
     };
 
-    $scope.DeleteData = function () {
+    $scope.DeleteData = function() {
 
             $http.delete('http://localhost:8080/data/delete/' + $scope.id)
             .success(function (data, status, headers) {
