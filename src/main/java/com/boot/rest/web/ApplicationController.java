@@ -4,6 +4,7 @@ import com.boot.rest.dao.DataObjectRepository;
 import com.boot.rest.model.DataObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/data")
+@PreAuthorize("hasRole('API')")
 public class ApplicationController {
 
     @Autowired

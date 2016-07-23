@@ -1,5 +1,6 @@
 package com.boot.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
@@ -10,6 +11,10 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -24,7 +29,8 @@ import java.util.Properties;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 @EnableTransactionManagement
 @EnableJpaRepositories("com.boot.rest.dao")
-public class Application {
+@EnableWebSecurity
+public class Application extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DataSource dataSource() {
@@ -59,6 +65,26 @@ public class Application {
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
 
         return jpaTransactionManager;
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/").hasRole("USER")
+                .antMatchers("/index.html").hasRole("USER")
+                .antMatchers("/admin.html").hasRole("ADMIN")
+                .antMatchers("/data/**/").hasRole("API")
+                .and()
+                .formLogin();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user").password("pass").roles("USER", "API").and()
+                .withUser("admin").password("pass").roles("ADMIN", "USER", "API").and()
+                .withUser("noapi").password("pass").roles("USER");
     }
 
     public static void main(String[] args) throws Throwable {
