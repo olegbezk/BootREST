@@ -7,7 +7,7 @@ angular.module('app', [])
         number: ""
     };
 
-    function showData() {
+    $scope.showData = function() {
         $http.get('http://localhost:8080/data/all/')
             .then(function(res){
                 $scope.results = res.data;
@@ -16,7 +16,7 @@ angular.module('app', [])
 
     $scope.showDataById = function() {
 
-        showData();
+        $scope.showData;
 
         $http.get('http://localhost:8080/data/' + $scope.idUn)
             .then(function(res){
@@ -25,14 +25,17 @@ angular.module('app', [])
             $scope.idUn = "";
     };
 
-    $scope.DeleteData = function() {
+    $scope.deleteData = function() {
 
             $http.delete('http://localhost:8080/data/delete/' + $scope.id)
             .success(function (data, status, headers) {
-                $scope.ServerResponse = data;
+                $scope.serverResponse = data;
+            })
+            .error(function (data, status, headers) {
+                $scope.serverResponse = data;
             });
 
-            showData();
+            $scope.showData
 
             $scope.id = "";
     };
@@ -63,7 +66,7 @@ angular.module('app', [])
 
             });
 
-            showData();
+            $scope.showData
 
             data.title = "";
             data.number = "";

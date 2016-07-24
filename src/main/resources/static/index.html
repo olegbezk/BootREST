@@ -68,7 +68,7 @@
     <hr />
 
     <h2>Delete</h2>
-    <form ng-submit="DeleteData()">
+    <form ng-submit="deleteData()">
         Input id:<br>
             <input type="text" name="id" ng-model="id" required />
         <input type="submit" ngClick="Submit" />
@@ -76,6 +76,11 @@
     </form>
 
     <h2>All Data</h2>
+    <form ng-submit="showData()">
+        <input type="submit" ngClick="Show" />
+        <hr />
+        {{serverResponse.status}}
+    </form>
     <table border="1" style="width:100%">
         <tr>
             <td style="width: 33%%"><p style="text-align:center;">
