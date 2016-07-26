@@ -28,7 +28,7 @@ public class User {
         return userRole;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userRoles")
     public void setUserRole(Set<UserRole> userRole) {
         this.userRole = userRole;
     }
