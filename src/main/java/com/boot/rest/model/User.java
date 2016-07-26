@@ -12,6 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "username")
     private Set<UserRole> userRole = new HashSet<>();
 
     @Id
@@ -28,7 +29,6 @@ public class User {
         return userRole;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
     public void setUserRole(Set<UserRole> userRole) {
         this.userRole = userRole;
     }
