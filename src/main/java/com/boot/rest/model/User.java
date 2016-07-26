@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    private Set<UserRole> userRole = new HashSet<>(0);
+    private Set<UserRole> userRole = new HashSet<>();
 
     @Id
     @Column(name = "username")
