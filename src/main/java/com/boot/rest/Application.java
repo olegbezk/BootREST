@@ -26,7 +26,7 @@ import java.util.Properties;
  * Created by Oleg on 20 Jul 2016.
  */
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableTransactionManagement
 @EnableJpaRepositories("com.boot.rest.dao")
 @EnableWebSecurity
@@ -37,6 +37,7 @@ public class Application extends WebSecurityConfigurerAdapter {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2)
                 .addScript("schema/applicationDatabase.sql")
+                .addScript("schema/insertUserInfo.sql")
                 .build();
     }
 
@@ -69,12 +70,17 @@ public class Application extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").hasRole("USER")
                 .antMatchers("/index.html").hasRole("USER")
                 .antMatchers("/admin.html").hasRole("ADMIN")
                 .antMatchers("/data/**/").hasRole("API")
+                .and()
+                .authorizeRequests().anyRequest().fullyAuthenticated()
+                .and()
+                .httpBasic()
                 .and()
                 .formLogin();
     }
