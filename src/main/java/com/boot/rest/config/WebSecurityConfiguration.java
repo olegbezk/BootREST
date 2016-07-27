@@ -13,6 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 /**
  * Created by Oleg on 26 Jul 2016.
@@ -40,7 +44,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").hasRole("USER")
                 .antMatchers("/admin.html").hasRole("ADMIN")
                 .antMatchers("/data/**/").hasRole("API")
-                .and().formLogin();
+                .and().formLogin()
+                .and().headers()
+                .frameOptions()
+                .sameOrigin();
     }
 
     @Bean
