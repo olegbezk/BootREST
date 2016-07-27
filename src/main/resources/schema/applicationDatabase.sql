@@ -5,18 +5,26 @@ number BIGINT NOT NULL,
 PRIMARY KEY (id)
 );
 
-CREATE TABLE users (
-username VARCHAR(45) NOT NULL,
-password VARCHAR(100) NOT NULL,
-enabled TINYINT NOT NULL DEFAULT 1 ,
-PRIMARY KEY(username)
+CREATE TABLE user (
+	id INT NOT NULL AUTO_INCREMENT,
+	username VARCHAR(45) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	enabled TINYINT NOT NULL DEFAULT 1 ,
+	UNIQUE KEY uniq_username(username),
+	PRIMARY KEY(id)
 );
 
-CREATE TABLE userRoles (
-user_id INT(10) NOT NULL AUTO_INCREMENT,
-username VARCHAR(45) NOT NULL,
-role VARCHAR(20) NOT NULL,
-PRIMARY KEY (user_id),
-UNIQUE KEY uni_username_role(username, role),
-CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username)
+CREATE TABLE role (
+	id INT NOT NULL AUTO_INCREMENT,
+	role VARCHAR(20) NOT NULL,
+	UNIQUE KEY uniq_role(role),
+	PRIMARY KEY(id)
 );
+
+CREATE TABLE user_role (
+	user_id INT NOT NULL,
+	role_id INT NOT NULL,
+	UNIQUE KEY uni_user_role(user_id, role_id),
+);
+
+create sequence HIBERNATE_SEQUENCE;

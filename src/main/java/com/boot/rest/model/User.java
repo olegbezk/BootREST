@@ -9,13 +9,14 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "username")
-    private Set<UserRole> userRole = new HashSet<>();
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
     @Column(name = "username")
     private String username;
 
@@ -25,11 +26,27 @@ public class User {
     @Column(name = "enabled")
     private boolean enabled;
 
-    public Set<UserRole> getUserRole() {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> userRole = new HashSet<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Set<Role> getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(Set<UserRole> userRole) {
+    public void setUserRole(Set<Role> userRole) {
         this.userRole = userRole;
     }
 
@@ -67,3 +84,4 @@ public class User {
                 '}';
     }
 }
+
