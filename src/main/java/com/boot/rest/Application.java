@@ -34,9 +34,6 @@ import java.util.Properties;
 @ComponentScan("com.boot.rest")
 public class Application {
 
-    @Value("classpath:schema/insertUserInfo.sql")
-    private Resource dataScript;
-
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
