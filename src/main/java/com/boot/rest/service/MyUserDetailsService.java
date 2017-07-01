@@ -1,8 +1,8 @@
 package com.boot.rest.service;
 
 import com.boot.rest.dao.UserRepository;
-import com.boot.rest.model.User;
 import com.boot.rest.model.Role;
+import com.boot.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,9 +42,7 @@ public class MyUserDetailsService implements UserDetailsService {
         Set<GrantedAuthority> setAuths =
                 roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toSet());
 
-        List<GrantedAuthority> result = new ArrayList<>(setAuths);
-
-        return result;
+        return new ArrayList<>(setAuths);
     }
 
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user,
